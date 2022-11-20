@@ -1,0 +1,135 @@
+﻿<!DOCTYPE html>
+
+<html>
+	<head>
+		<script src="three.min.js"></script>
+		<script src="mannequin.js"></script>
+		<style>
+			body {color: black; text-shadow: 0 0 4px gray; font-family: Calibri;}
+			h1   {position: fixed; z-index: 10; top: 0; left: 0; text-align: center; width: 100%;}
+			div  {position: fixed; z-index: 10; bottom: 1em; left: 1em; font-size: 1.5em; font-style: italic;}
+		</style>
+	</head>
+
+	<body>
+	
+		<!-- Сложете реално заглавие -->
+		<h1>Разходка в Калтинец</h1>  
+		
+		<!-- Сложете описание на сцената (опитайте с рима) -->
+		<div>
+			Попаднеш ли веднъж в дебрите Калтински,<br>
+			не ще да има кой да те спаси,<br>
+			беж бързо и знай ти <br>
+			че не ще се върнеш с пари.
+		</div>
+		
+		<script>
+
+			createScene(); // инициализиране на сцената
+			
+			// тук си направете човечетата и статичните елементи по позите
+			// ...
+			// ...
+			const sleep = ms => new Promise(r => setTimeout(down, ms));
+
+			var man = new Male();
+			man.position.x = 20;
+			man.position.z = -150;
+			man.l_fingers.bend = 35;
+			man.l_fingers.tips.bend = 90;
+			man.turn = -120;
+
+			var woman = new Female();
+			woman.position.x = 34;
+			woman.r_fingers.bend = 35;
+			woman.position.z = -141;
+			woman.turn = -120;
+
+			var gipsy = new Male();
+			var blackColor = new THREE.Color("black");
+			gipsy.head.recolor(blackColor);
+			gipsy.r_leg.recolor(blackColor);
+			gipsy.l_leg.recolor(blackColor);
+			gipsy.r_knee.recolor(blackColor);
+			gipsy.l_knee.recolor(blackColor);
+			gipsy.torso.recolor(blackColor);
+			gipsy.pelvis.recolor(blackColor);
+			gipsy.r_elbow.recolor(blackColor);
+			gipsy.neck.recolor(blackColor);
+			gipsy.l_elbow.recolor(blackColor);
+			gipsy.r_arm.recolor(blackColor);
+			gipsy.l_arm.recolor(blackColor);
+			gipsy.r_fingers.recolor(blackColor);
+			gipsy.r_wrist.recolor(blackColor);
+			gipsy.r_fingers.tips.recolor(blackColor);
+			gipsy.l_fingers.recolor(blackColor);
+			gipsy.l_wrist.recolor(blackColor);
+			gipsy.l_fingers.tips.recolor(blackColor);
+
+			gipsy.position.x = 60;
+			gipsy.position.z = -200;
+			
+			const speed = 1;
+			const UP_TICKS = 25;
+			const DOWN_TICKS = 50;
+			var curTicks = 0;
+			var leftLeg = false;
+			function animate(t)
+			{
+
+				if(curTicks < DOWN_TICKS && curTicks > UP_TICKS)
+				{
+					if(leftLeg)
+					{
+						man.l_leg.raise -= 30 / UP_TICKS;
+						woman.l_leg.raise -= 30 / UP_TICKS;
+					}
+					else
+					{
+						man.r_leg.raise -= 30 / UP_TICKS;
+						woman.r_leg.raise -= 30 / UP_TICKS;
+					}
+					
+					
+
+				}
+				else if(curTicks < UP_TICKS)
+				{
+					if(leftLeg)
+					{
+						man.l_leg.raise += 30 / UP_TICKS;
+						woman.l_leg.raise += 30 / UP_TICKS;
+					
+					}
+					else
+					{
+						man.r_leg.raise += 30 / UP_TICKS;
+						woman.r_leg.raise += 30 / UP_TICKS;
+						
+					}
+					
+				}
+				else if(curTicks == DOWN_TICKS)
+				{
+					man.l_leg.raise = 0;
+					man.r_leg.raise = 0;
+					woman.l_leg.raise = 0;
+					woman.r_leg.raise = 0;
+					leftLeg = !leftLeg;
+					man.position.x -= speed;
+					man.position.z += speed;
+					woman.position.x -= speed;
+					woman.position.z += speed;
+					gipsy.position.x -= 2 * speed;
+					gipsy.position.z += 3 * speed;
+					curTicks = 0;
+				}
+				curTicks++;
+					//console.log(t);
+					
+			}
+			
+		</script>
+	</body>
+</html>
